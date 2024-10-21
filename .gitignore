@@ -1,0 +1,13 @@
+*.csv
+*.ods
+django
+*~
+.__*
+__MAC*
+*.pyc
+*.json
+imports
+.on-save.json
+db.sqlite3*
+pretty.py
+*.css
