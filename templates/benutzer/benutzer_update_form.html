@@ -1,0 +1,16 @@
+ {% extends 'bootstrap/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block inhalt %}
+
+    <h2>Bitte bearbeiten Sie ihr Profil.</h2>
+
+    <form method="post" class="form-group">
+        {% csrf_token %}
+	{{ form|crispy }}
+        <button type="submit" class="btn btn-success">Ändern</button>
+    </form>
+
+{% endblock %}
+

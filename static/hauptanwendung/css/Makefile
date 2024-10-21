@@ -3,7 +3,7 @@ all: style.css vorheader.css basis.css normalize.css symbole.css fonts.css entwi
 #formular.css: ../scss/_formular.scss
 #	sassc ../scss/_formular.scss formular.css
 
-style.css: ../scss/style.scss
+style.css: ../scss/style.scss ../scss/*.scss
 	sassc ../scss/style.scss style.css
 
 %.css: ../scss/_%.scss

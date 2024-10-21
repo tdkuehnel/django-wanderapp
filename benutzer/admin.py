@@ -41,7 +41,7 @@ class BenutzerAdmin(UserAdmin):
     ordering = ['username']
     fieldsets = (
         ('Standardinformationen', {
-            'fields': ('username', 'email',)
+            'fields': ('username', 'email', 'avatar')
         }),
         ('Systeminformationen', {
             'classes': ('collapse',),

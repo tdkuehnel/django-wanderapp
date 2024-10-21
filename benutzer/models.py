@@ -4,6 +4,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import UserManager
 from django.utils import timezone
 from simple_history import register
+from PIL import Image
 
 import datetime
 
@@ -45,17 +46,36 @@ class Benutzer(AbstractBaseUser, PermissionsMixin):
         verbose_name='user permissions'
     )
 
+    avatar = models.ImageField(
+        default='avatar.jpg', # default avatar
+        upload_to='profile_avatars' # dir to store the image
+    )
+
     objects = BenutzerManager()
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
 
     def __str__(self):
-        return (self.username)
+        return f'Profil: {self.username}.'
+        #(self.username)
 
     def get_name(self):
         return self.username
     
+    def save(self, *args, **kwargs):
+        # save the profile first
+        super().save(*args, **kwargs)
+
+        # resize the image
+        img = Image.open(self.avatar.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            # create a thumbnail
+            img.thumbnail(output_size)
+            # overwrite the larger image
+            img.save(self.avatar.path)
+
     class Meta:
         app_label = 'benutzer'
         db_table = "benutzer"

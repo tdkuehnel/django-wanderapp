@@ -40,11 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'django_navtag',
     'simple_history',
     'captcha',    
+    'crispy_forms',
+    'crispy_bootstrap4',
     'benutzer.apps.BenutzerConfig',
     'wanderstrecke.apps.WanderStreckeConfig',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -64,6 +70,7 @@ except:
     pass
     
 ROOT_URLCONF = 'wanderapp.urls'
+LOGIN_REDIRECT_URL = '/benutzer/profil/'
 
 TEMPLATES = [
     {
@@ -145,3 +152,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'

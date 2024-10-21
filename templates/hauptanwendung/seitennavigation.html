@@ -1,0 +1,12 @@
+{% load i18n static cache_bust navtag %}
+
+{% nav text "active" %}
+<ul class="nav flex-column ">
+    <li class="nav-item">
+        <a class="nav-link eintrag {{ nav.startseite }}" href="{% url 'index' %}">Startseite</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link eintrag {{ nav.einschreibungen }}" href="{% url 'benutzer:home' %}">Profil</a>
+    </li>
+</ul>
+

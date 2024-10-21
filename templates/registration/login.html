@@ -1,0 +1,15 @@
+{% extends 'bootstrap/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block inhalt %}
+
+    <h2>Bitte melden Sie sich an.</h2>
+
+    <form method="post" class="form-group">
+        {% csrf_token %}
+	{{ form|crispy }}
+        <button type="submit" class="btn btn-success">Anmelden</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,115 @@
+// Farben für die Navigation
+
+$nav_grund: #E6E6E6;
+$nav_rahmen: $gray_5;
+
+$nav_eintrag_grund: $white;
+$nav_eintrag_text: $gray_90;
+$nav_eintrag_rahmen: $gray_60;
+
+$nav_aktiv_grund: $blue_70;
+$nav_aktiv_text: $white;
+$nav_aktiv_rahmen: $blue_80;
+
+$nav_inaktiv_grund: $gray_0;
+$nav_inaktiv_text: $gray_40;
+$nav_inaktiv_rahmen: $gray_5;
+
+$inhalt_title_text: $red_90;
+$inhalt_rahmen: $gray_2;
+$inhalt_grund: $white;
+
+$fehler_text: $red_70;
+
+.menu {
+    background-color: #F1F2F4;
+    padding: 0 .5em;
+    border-right: 1px solid $nav_rahmen;
+
+    li {
+        margin: .35em 0;
+    }
+
+    ul ul {
+        padding-left: .5em;
+        margin-bottom: .7em;
+    }
+
+    & > ul {
+        position: -webkit-sticky;
+        position: sticky;
+        top: .35em;
+    }
+
+    .eintrag {
+        display: flex;
+        width: 100%;
+        padding: .6em .75em;
+        white-space: nowrap;
+        border: 1px solid $nav_eintrag_rahmen;
+        background-color: $nav_eintrag_grund;
+        color: $nav_eintrag_text;
+    }
+
+    a.eintrag:hover {
+        background-color: $blue_40;
+        border-color: $blue_40;
+	color: $white;
+    }
+
+    .text {
+        flex-grow: 1;
+	font-size: 0.9em;
+    }
+
+    .abstand {
+        margin-bottom: .88em;
+    }
+
+    .nav-aktiv {
+        & > .eintrag,
+        & > a.eintrag:hover {
+            background-color: $nav_aktiv_grund;
+            border-color: $nav_aktiv_rahmen;
+            color: $nav_aktiv_text;
+            .zustand {
+                color: inherit;
+            }
+        }
+    }
+}
+
+@media (max-width: $mobile_breite) {
+
+    .menu {
+        display: none;
+        flex-direction: column;
+        padding: 0;
+        font-size: 0.9em;
+        //border: none;
+
+        & > ul {
+            position: static;
+            top: 0;
+            margin: 0
+        }
+
+        li, .abstand {
+            margin: 0;
+        }
+
+        .eintrag {
+            //border: none;
+            padding: .8em 1.2em;
+            border-bottom: 1px solid $nav_eintrag_rahmen;
+            background-color: $nav_eintrag_grund;
+            color: $nav_eintrag_text;
+        }
+
+        a.eintrag:hover {
+            background-color: $blue_40;
+            border-color: $blue_40;
+	    color: $white;
+        }
+    }
+}

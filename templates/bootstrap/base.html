@@ -1,4 +1,4 @@
-{% load i18n static cache_bust %}
+{% load i18n static cache_bust navtag %}
 
 <!doctype html>
 <html lang="{{ LANGUAGE_CODE|default:"de-de" }}">
@@ -20,37 +20,56 @@
     <body>
 
         <header id="kopfzeile">
-            <div class="header">
-                {% block uberschrift %}
-                    <h4>{{ title }}</h4>
+            <nav id="header" class="navbar navbar-expand navbar-light bg-light">
+                <a class="navbar-brand" href="index.html">Wanderapp</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% block navigation %}
+                    {% include 'hauptanwendung/hauptnavigation.html' %}
                 {% endblock %}
-            </div>
+            </nav>
         </header>
     
-        <main role="main" class="container">
-            {% block navigation %}
-                {% include 'hauptanwendung/navigation.html' %}
-            {% endblock %}
-            {% block messages %}
-                {% if messages %}
-                    <aside class="alert alert-primary text-center" role="alert" id="mitteilungen">
-                        {% for message in messages %}
-                            <div class="mitteilung{% if message.tags %} {{ message.tags }}{% endif %}">{{ message|capfirst }}</div>
-                        {% endfor %}
-                    </aside>
-                {% endif %}
-            {% endblock messages %}
+        <main role="main" class="d-flex">
 
-            <article id="inhalt">
-                
-                {% block inhalt %}
-                    {{ content }}
+            <nav id="seitennavigation" class="nav menu bg-light col-2">
+                {% block seitennavigation %}
+                    {% include 'hauptanwendung/seitennavigation.html' %}
                 {% endblock %}
-                
-                {% block debug %}
-                    {% include "hauptanwendung/debug.html" %}
-                {% endblock %}
-            </article>
+            </nav>
+
+            <section>
+                <article id="inhalt" class="d-flex flex-column">
+
+                    {% block uberschrift %}
+                        <div class="mx-auto pt-4 pb-2">
+                            <h4>{{ title }}</h4>
+                        </div>
+                    {% endblock %}
+
+                    {% block messages %}
+                        {% if messages %}
+                            <aside class="alert alert-primary text-center" role="alert" id="mitteilungen">
+                                {% for message in messages %}
+                                    <div class="mitteilung{% if message.tags %} {{ message.tags }}{% endif %}">{{ message|capfirst }}</div>
+                                {% endfor %}
+                            </aside>
+                        {% endif %}
+                    {% endblock messages %}
+
+                    {% block inhalt %}
+                        {{ content }}
+                    {% endblock %}
+
+                    {% block debug %}
+                        {% include "hauptanwendung/debug.html" %}
+                    {% endblock %}
+
+                </article>
+            </section>
         </main>
         
         <!-- Optional JavaScript -->
