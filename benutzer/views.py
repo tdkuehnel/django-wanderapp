@@ -6,6 +6,7 @@ from django.views.generic import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
 from django.views.generic import CreateView
+from django.views.generic import ListView
 from django.urls import reverse_lazy
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
@@ -25,6 +26,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 
 from benutzer.models import Benutzer
+from wanderstrecke.models import WanderStrecke
 
 from .forms import AnmeldeForm
 
@@ -61,3 +63,17 @@ def redirect_to_user_profile(request):
     return HttpResponseRedirect(
         reverse('benutzer:profil',
                 args=[request.user.id]))
+
+class BenutzerWanderStreckeListView(ListView):
+    """Ansicht zur Anzeige der Wanderstrecken eines Benutzers."""
+    model = WanderStrecke
+    template_name = 'benutzer/wanderstrecken_list.html'
+
+    def get_queryset(self):
+        self.benutzer = get_object_or_404(Benutzer, id=self.kwargs["benutzer_id"])
+        return WanderStrecke.objects.filter(benutzer=self.benutzer)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Ihre Wanderstrecken.'
+        return context

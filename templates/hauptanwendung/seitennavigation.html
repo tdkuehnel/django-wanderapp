@@ -6,7 +6,7 @@
         <a class="nav-link eintrag {{ nav.profil }}" href="{% url 'benutzer:home' %}">Profil</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link eintrag {{ nav.wanderungen }}" href="{% url 'index' %}">Wanderungen</a>
+        <a class="nav-link eintrag {{ nav.wanderstrecken }}" href="{% url 'benutzer:wanderstrecken' user.id %}">Wanderstrecken</a>
     </li>
 </ul>
 

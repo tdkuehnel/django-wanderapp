@@ -1,0 +1,22 @@
+{% extends 'bootstrap/base.html' %}
+
+{% load crispy_forms_tags navtag %}
+
+{% block seitennavigation %}
+{% nav "wanderstrecken" %}
+{{ block.super }}
+{% endblock %}
+
+{% block inhalt %}
+
+    <ul class="list-group">
+        {% for wanderstrecke in object_list %}
+            <li class="list-group-item">{{ wanderstrecke.bezeichnung }}</li>
+        {% endfor %}
+    </ul>
+
+    {% if not object_list %}
+        <span>Zur Zeit keine vorhanden.</span>
+    {% endif %}
+
+{% endblock %}

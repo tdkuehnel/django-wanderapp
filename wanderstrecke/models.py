@@ -6,6 +6,7 @@ class WanderStrecke(models.Model):
     id                      = models.AutoField('ID', primary_key=True, db_column='wst_id')
     bezeichnung             = models.CharField('Bezeichnung', max_length=512, default='<unbenannt>', db_column='wst_txt')
     json                    = models.FileField('JSON-Datei')
+    benutzer                = models.ForeignKey('benutzer.Benutzer', on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return self.bezeichnung
