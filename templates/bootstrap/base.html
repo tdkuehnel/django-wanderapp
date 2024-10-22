@@ -35,14 +35,14 @@
     
         <main role="main" class="d-flex">
 
-            <nav id="seitennavigation" class="nav menu bg-light col-2">
-                {% block seitennavigation %}
+            {% block seitennavigation %}
+                <nav id="seitennavigation" class="nav menu bg-light col-2">
                     {% include 'hauptanwendung/seitennavigation.html' %}
-                {% endblock %}
-            </nav>
+                </nav>
+            {% endblock %}
 
             <section>
-                <article id="inhalt" class="d-flex flex-column">
+                <article id="inhalt" class="d-flex flex-column m-4">
 
                     {% block uberschrift %}
                         <div class="mx-auto pt-4 pb-2">

@@ -50,6 +50,11 @@ class BenutzerProfilView(UpdateView):
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form), status=401)
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Bitte bearbeiten Sie ihr Profil.'
+        return context
 
 @login_required
 def redirect_to_user_profile(request):
