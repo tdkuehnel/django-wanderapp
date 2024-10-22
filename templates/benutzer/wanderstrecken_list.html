@@ -16,7 +16,9 @@
 
     <ul class="list-group">
         {% for wanderstrecke in object_list %}
-            <li class="list-group-item">{{ wanderstrecke.bezeichnung }}</li>
+            <li class="list-group-item">
+                <a href="{% url 'benutzer:wanderstrecke' wanderstrecke.id %}">{{ wanderstrecke.bezeichnung }}</a>
+            </li>
         {% endfor %}
     </ul>
 

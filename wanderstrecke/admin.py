@@ -12,9 +12,14 @@ class WanderStreckeAdminForm(forms.ModelForm):
         model = WanderStrecke
         fields = [
             'bezeichnung',
+            'beschreibung',
+            'json',
+            'url',
+            'bild',
+            'benutzer',
         ]
         widgets = {
-            'bezeichnung'         : forms.Textarea(attrs={'cols': 120, 'rows': 2}),
+            'beschreibung'         : forms.Textarea(attrs={'cols': 120, 'rows': 4}),
         }
 
 class WanderStreckeInline(admin.TabularInline):
@@ -25,7 +30,7 @@ class WanderStreckeInline(admin.TabularInline):
 @admin.register(WanderStrecke)
 class WanderStreckeAdmin(SimpleHistoryAdmin):
     form = WanderStreckeAdminForm
-    list_filter = ['bezeichnung']
+    list_filter = ['benutzer',]
     filter_horizontal = [
         #'quellen',
     ]

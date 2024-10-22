@@ -8,16 +8,16 @@
 {% endblock %}
 
 {% block seitennavigation %}
-{% nav "profil" for sidenav %}
+{% nav "wanderstrecken" for sidenav %}
 {{ block.super }}
 {% endblock %}
 
 {% block inhalt %}
 
-    <form method="post" class="form-group">
+    <form method="post" class="form-group" enctype="multipart/form-data">
         {% csrf_token %}
 	{{ form|crispy }}
-        <button type="submit" class="btn btn-success">Hinzufügen</button>
+        <button type="submit" class="btn btn-success">Speichern</button>
     </form>
 
 {% endblock %}

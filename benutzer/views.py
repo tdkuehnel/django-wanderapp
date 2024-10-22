@@ -24,8 +24,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
+from django.urls import reverse_lazy
+from django.forms.models import modelform_factory
 
 from benutzer.models import Benutzer
+from benutzer.forms import WanderStreckeUpdateForm
 from wanderstrecke.models import WanderStrecke
 
 from .forms import AnmeldeForm
@@ -64,6 +67,13 @@ def redirect_to_user_profile(request):
         reverse('benutzer:profil',
                 args=[request.user.id]))
 
+# Mixin from https://stackoverflow.com/questions/16937076/how-does-one-use-a-custom-widget-with-a-generic-updateview-without-having-to-red
+# Zur Zeit nicht benutzt.
+
+class ModelFormWidgetMixin(object):
+    def get_form_class(self):
+        return modelform_factory(self.model, fields=self.fields, widgets=self.widgets)
+
 class BenutzerWanderStreckeListView(ListView):
     """Ansicht zur Anzeige der Wanderstrecken eines Benutzers."""
     model = WanderStrecke
@@ -81,10 +91,40 @@ class BenutzerWanderStreckeListView(ListView):
 class BenutzerWanderStreckeCreateView(CreateView):
     """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers."""
     model = WanderStrecke
-    fields = ['bezeichnung', 'json']
+    #fields = ['bezeichnung', 'json', 'url', 'bild',]
+    form_class = WanderStreckeUpdateForm
     template_name = 'benutzer/wanderstrecke_create_form.html'
+
+    def get_success_url(self):
+        return reverse("benutzer:wanderstrecke", kwargs={"pk": self.object.id})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Wanderstrecke hinzufügen.'
+        return context
+
+class BenutzerWanderStreckeDetailView(DetailView):
+    """Ansicht zum Anzeigen einer Wanderstrecke eines Benutzers."""
+    model = WanderStrecke
+    fields = ['bezeichnung', 'json']
+    template_name = 'benutzer/wanderstrecke_detail_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Wanderstrecke anzeigen.'
+        return context
+
+class BenutzerWanderStreckeUpdateView(UpdateView):
+    """Ansicht zum Bearbeiten einer Wanderstrecke eines Benutzers."""
+    model = WanderStrecke
+    #fields = ['bezeichnung', 'json', 'url', 'bild',]
+    form_class = WanderStreckeUpdateForm
+    template_name = 'benutzer/wanderstrecke_update_form.html'
+
+    def get_success_url(self):
+        return reverse("benutzer:wanderstrecke", kwargs={"pk": self.object.id})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Wanderstrecke bearbeiten.'
         return context

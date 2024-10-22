@@ -1,0 +1,27 @@
+{% extends 'bootstrap/base.html' %}
+
+{% load crispy_forms_tags navtag %}
+
+{% block navigation %}
+{% nav "heimat" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% nav "wanderstrecken" for sidenav %}
+{{ block.super }}
+{% endblock %}
+
+{% block inhalt %}
+
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ object.bild.url }}" alt="Wanderbild">
+        <div class="card-body">
+            <h5 class="card-title">{{ object.bezeichnung }}</h5>
+            <p class="card-text">{{ object.beschreibung }}</p>
+            <p class="card-text"><a href="{{ object.url }}" target="_blank">Auf strecken-messen.de anzeigen</a></p>
+            <a href="{% url 'benutzer:wanderstrecke_bearbeiten' object.id %}" class="btn btn-primary">Bearbeiten</a>
+        </div>
+    </div>
+
+{% endblock %}
