@@ -8,10 +8,11 @@ app_name = 'benutzer'
 urlpatterns = [
 
     # Eigene Views.
-    path('anmeldung/',                       views.WanderappLoginView.as_view(),             name='login'),
-    path("profil/",                          views.redirect_to_user_profile,                 name="home"),
-    path("profil/<int:pk>",                  views.BenutzerProfilView.as_view(),             name="profil"),
-    path('wanderstrecke/<int:benutzer_id>/', views.BenutzerWanderStreckeListView.as_view(),  name='wanderstrecken'),
+    path('anmeldung/',                       views.WanderappLoginView.as_view(),                 name='login'),
+    path("profil/",                          views.redirect_to_user_profile,                     name="home"),
+    path("profil/<int:pk>",                  views.BenutzerProfilView.as_view(),                 name="profil"),
+    path('wanderstrecke/<int:benutzer_id>/', views.BenutzerWanderStreckeListView.as_view(),      name='wanderstrecken'),
+    path('wanderstrecke/hinzu/',             views.BenutzerWanderStreckeCreateView.as_view(),    name='wanderstrecke_hinzu'),
 
     # Views aus dem Paket django.contrib.auth
     path("abmeldung/",                       authviews.LogoutView.as_view(),                 name="logout"),

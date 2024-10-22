@@ -77,3 +77,14 @@ class BenutzerWanderStreckeListView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Ihre Wanderstrecken.'
         return context
+
+class BenutzerWanderStreckeCreateView(CreateView):
+    """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers."""
+    model = WanderStrecke
+    fields = ['bezeichnung', 'json']
+    template_name = 'benutzer/wanderstrecke_create_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Wanderstrecke hinzufügen.'
+        return context
