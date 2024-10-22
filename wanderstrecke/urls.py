@@ -6,5 +6,5 @@ from . import views
 app_name = 'wanderstrecke'
 
 urlpatterns = [
-    path('/',                       views.WanderStreckenView.as_view(),             name='index'),
+    path('',                                 views.WanderStreckeListView.as_view(),                          name='index'),
 ]

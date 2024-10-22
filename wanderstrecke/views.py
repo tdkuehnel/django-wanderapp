@@ -5,6 +5,6 @@ from .models import WanderStrecke
 
 # Create your views here.
 
-class BenutzerWanderStreckeListView(ListView):
-    """Ansicht zur Anzeige der Wanderstrecken eines Benutzers."""
+class WanderStreckeListView(ListView):
+    """Ansicht zur Anzeige aller Wanderstrecken."""
     model = WanderStrecke

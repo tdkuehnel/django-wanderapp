@@ -2,8 +2,13 @@
 
 {% load crispy_forms_tags navtag %}
 
+{% block navigation %}
+{% nav "heimat" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
 {% block seitennavigation %}
-{% nav "wanderstrecken" %}
+{% nav "wanderstrecken" for sidenav %}
 {{ block.super }}
 {% endblock %}
 

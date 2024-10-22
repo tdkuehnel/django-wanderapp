@@ -1,5 +1,10 @@
 {% extends 'bootstrap/base.html' %}
-{% load cache_bust %}
+{% load cache_bust navtag %}
+
+{% block navigation %}
+{% nav "startseite" for hauptnav %}
+{{ block.super }}
+{% endblock %}
 
 {% block seitennavigation %}
 {% endblock %}

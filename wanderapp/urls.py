@@ -32,6 +32,9 @@ urlpatterns = [
     # Benutzer
     path('benutzer/', include('benutzer.urls')),
 
+    # Wanderstrecken
+    path('wanderstrecken/', include('wanderstrecke.urls')),
+
     # TinyMCE
     path('tinymce/', include('tinymce.urls')),
 
