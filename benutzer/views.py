@@ -103,6 +103,10 @@ class BenutzerWanderStreckeCreateView(CreateView):
         context['title'] = 'Wanderstrecke hinzufügen.'
         return context
 
+    def form_valid(self, form):
+        messages.success(self.request, f'Wanderstrecke "{self.object.__str__()}" erzeugt.')
+        return super().form_valid(form)
+
 class BenutzerWanderStreckeDetailView(DetailView):
     """Ansicht zum Anzeigen einer Wanderstrecke eines Benutzers."""
     model = WanderStrecke
@@ -128,3 +132,8 @@ class BenutzerWanderStreckeUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Wanderstrecke bearbeiten.'
         return context
+
+    def form_valid(self, form):
+        if form.changed_data:
+            messages.success(self.request, f'Änderungen an der Wanderstrecke "{self.object.__str__()}" wurden gespeichert.')
+        return super().form_valid(form)
