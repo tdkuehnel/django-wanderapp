@@ -17,7 +17,23 @@ class WanderStrecke(models.Model):
     class Meta:
         app_label            = 'wanderstrecke'
         db_table             = 'wanderstrecke'
-        verbose_name         = 'WanderStrecke'
-        verbose_name_plural  = 'WanderStrecken'
+        verbose_name         = 'Wanderstrecke'
+        verbose_name_plural  = 'Wanderstrecken'
+        # unique_together = [['bezeichnung',]]
+        ordering             = ['bezeichnung']
+
+class WanderPunkt(models.Model):
+    id                      = models.AutoField('ID', primary_key=True, db_column='wst_id')
+    bezeichnung             = models.CharField('Bezeichnung', max_length=512, default='<unbenannt>', db_column='wpt_txt')
+    beschreibung            = models.CharField('Beschreibung', max_length=8192, default='<ohne Beschreibung>', db_column='wpt_bsc')
+
+    def __str__(self):
+        return self.bezeichnung
+
+    class Meta:
+        app_label            = 'wanderstrecke'
+        db_table             = 'wanderpunkt'
+        verbose_name         = 'Wanderpunkt'
+        verbose_name_plural  = 'Wanderpunkte'
         # unique_together = [['bezeichnung',]]
         ordering             = ['bezeichnung']
