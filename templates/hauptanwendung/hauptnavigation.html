@@ -13,10 +13,15 @@
         <li class="nav-item">
             <a class="nav-link {{ hauptnav.heimat }}" href="{% url 'benutzer:home' %}">Heimat</a>
         </li>
+        {% if perms.wanderstrecke.change_wanderpunkt %}
+            <li class="nav-item">
+                <a class="nav-link {{ hauptnav.wanderpunkte }}" href="{% url 'benutzer:home' %}">Wanderpunkte</a>
+            </li>
+        {% endif %}
     </ul>
     <ul class="navbar-nav ml-auto ">
             <li class="nav-item">
-            <a class="nav-link {{ hauptnav.zusatzfunktionen }}" href="{% url 'benutzer:home' %}">Abmelden</a>
+            <a class="nav-link {{ hauptnav.abmelden }}" href="{% url 'abmelden' %}">Abmelden</a>
         </li>
     </ul>
 </div>

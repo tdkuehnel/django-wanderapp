@@ -55,6 +55,11 @@ class BenutzerProfilView(UpdateView):
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form), status=401)
 
+    def form_valid(self, form):
+        if form.changed_data:
+            messages.success(self.request, f'Die Änderungen an Ihrem Profil wurden gespeichert.')
+        return super().form_valid(form)
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)

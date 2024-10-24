@@ -15,7 +15,9 @@ Including another URLconf
 """
 
 from django.conf import settings
+from django.urls import re_path
 from django.conf.urls.static import static
+from django.contrib.auth.views import LogoutView
 from django.contrib import admin
 from django.urls import path, include
 
@@ -24,7 +26,8 @@ from .views import index
 urlpatterns = [
 
     # Hauptansicht
-    path('',                                                index,                             name='index'),
+    path('',                               index,                                                                name='index'),
+    re_path(r'^abmelden/$',                LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL},    name='abmelden'),
 
     # Admin Interface
     path('admin/', admin.site.urls),

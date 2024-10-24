@@ -1,6 +1,14 @@
 {% extends 'bootstrap/base.html' %}
 
-{% load crispy_forms_tags %}
+{% load crispy_forms_tags navtag%}
+
+{% block navigation %}
+{% nav "startseite" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% endblock %}
 
 {% block inhalt %}
 
