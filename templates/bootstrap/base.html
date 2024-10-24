@@ -9,7 +9,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE"/>{% endblock %}
-        
+
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" type="text/css" href="{% block stylesheet1 %}{% static "bootstrap/4.3.1/css/bootstrap.min.css"%}{% endblock %}"\>
         <link rel="stylesheet" type="text/css" href="{% block stylesheet2 %}{% static "hauptanwendung/css/style.css"%}?{% cache_bust %}{% endblock %}"\>
@@ -21,7 +21,7 @@
 
         <header id="kopfzeile">
             <nav id="header" class="navbar navbar-expand navbar-light bg-light">
-                <a class="navbar-brand" href="index.html">Wanderapp</a>
+                <a class="navbar-brand" href="{% url 'index' %}">Wanderapp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
                 {% endblock %}
             </nav>
         </header>
-    
+
         <main role="main" class="d-flex">
 
             {% block seitennavigation %}
@@ -46,8 +46,14 @@
 
                     {% block uberschrift %}
                         <div class="mx-auto pt-4 pb-2">
-                            <h4>{{ title }}</h4>
+                            <h4>
+                                {{ title }}
+                                {% block head_title %}
+                                {% endblock head_title %}
+                            </h4>
                         </div>
+                        {% block extra_head %}
+                        {% endblock extra_head %}
                     {% endblock %}
 
                     {% block messages %}
@@ -63,6 +69,12 @@
                     {% block inhalt %}
                         {{ content }}
                     {% endblock %}
+                    {% block body %}
+                        {% block content %}
+                        {% endblock content %}
+                    {% endblock body %}
+                    {% block extra_body %}
+                    {% endblock extra_body %}
 
                     {% block debug %}
                         {% include "hauptanwendung/debug.html" %}

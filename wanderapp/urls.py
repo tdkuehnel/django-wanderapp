@@ -44,6 +44,8 @@ urlpatterns = [
     # django-simple-captcha
     path('captcha/', include('captcha.urls')),
 
+    # allauth
+    path('benutzer/', include('wanderapp.authurls')),
 ]
 
 if settings.DEBUG:

@@ -10,9 +10,11 @@
         <li class="nav-item">
             <a class="nav-link {{ hauptnav.wanderstrecken }}" href="{% url 'wanderstrecke:index' %}">Wanderstrecken</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ hauptnav.heimat }}" href="{% url 'benutzer:home' %}">Heimat</a>
-        </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link {{ hauptnav.heimat }}" href="{% url 'benutzer:home' %}">Heimat</a>
+            </li>
+        {% endif %}
         {% if perms.wanderstrecke.change_wanderpunkt %}
             <li class="nav-item">
                 <a class="nav-link {{ hauptnav.wanderpunkte }}" href="{% url 'benutzer:home' %}">Wanderpunkte</a>
@@ -20,9 +22,17 @@
         {% endif %}
     </ul>
     <ul class="navbar-nav ml-auto ">
+        {% if user.is_authenticated %}
             <li class="nav-item">
-            <a class="nav-link {{ hauptnav.abmelden }}" href="{% url 'abmelden' %}">Abmelden</a>
-        </li>
+                <a class="nav-link {{ hauptnav.abmelden }}" href="{% url 'account_logout' %}">Abmelden</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link {{ hauptnav.anmelden }}" href="{% url 'account_login' %}">Anmelden</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ hauptnav.registrierenn }}" href="{% url 'account_signup' %}">Registrieren</a>
+            </li>
+        {% endif %}
     </ul>
 </div>
-

@@ -1,0 +1,13 @@
+{% extends "allauth/layouts/base.html" %}
+
+{% load navtag%}
+
+{% block navigation %}
+{% nav "startseite" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% endblock %}
+
+{% block content %}{% endblock %}

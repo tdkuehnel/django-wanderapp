@@ -1,0 +1,15 @@
+{% extends "allauth/layouts/base.html" %}
+
+{% load navtag%}
+
+{% block navigation %}
+{% nav "heimat" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% nav "authentifizierung" for sidenav %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}{% endblock %}
