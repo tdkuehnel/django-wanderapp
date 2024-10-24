@@ -18,6 +18,8 @@
         {% csrf_token %}
 	{{ form|crispy }}
         <button type="submit" class="btn btn-success">Speichern</button>
+        <a href="{% url 'benutzer:wanderstrecke' object.id %}" class="btn btn-primary">Zurück</a>
+        <a href="{% url 'benutzer:wanderstrecke_loeschen' object.id %}" class="btn btn-primary">Löschen</a>
     </form>
 
 {% endblock %}

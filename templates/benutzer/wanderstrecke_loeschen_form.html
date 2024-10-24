@@ -1,0 +1,33 @@
+{% extends 'bootstrap/base.html' %}
+
+{% load crispy_forms_tags navtag %}
+
+{% block navigation %}
+{% nav "heimat" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% nav "wanderstrecken" for sidenav %}
+{{ block.super }}
+{% endblock %}
+
+{% block inhalt %}
+
+    <form method="post" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>Möchten Sie die Wanderstrecke</p>
+        <div class="card mb-2" style="width: 18rem;">
+            <img class="card-img-top" src="{{ object.bild.url }}" alt="Wanderbild">
+            <div class="card-body">
+                <h5 class="card-title">{{ object.bezeichnung }}</h5>
+                <p class="card-text">{{ object.beschreibung }}</p>
+            </div>
+        </div>
+        <p>wirklich löschen ? </p>
+	{{ form|crispy }}
+        <button type="submit" class="btn btn-success">Löschen</button>
+        <a href="{% url 'benutzer:wanderstrecke' object.id %}" class="btn btn-primary">Abbrechen</a>
+    </form>
+
+{% endblock %}

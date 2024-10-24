@@ -16,6 +16,7 @@ urlpatterns = [
     path('wanderstrecke/hinzu/',                             views.BenutzerWanderStreckeCreateView.as_view(),    name='wanderstrecke_hinzu'),
     path('wanderstrecke/<int:pk>/',                          views.BenutzerWanderStreckeDetailView.as_view(),    name='wanderstrecke'),
     path('wanderstrecke/bearbeiten/<int:pk>/',               views.BenutzerWanderStreckeUpdateView.as_view(),    name='wanderstrecke_bearbeiten'),
+    path('wanderstrecke/loeschen/<int:pk>/',                 views.BenutzerWanderStreckeDeleteView.as_view(),    name='wanderstrecke_loeschen'),
 
     # Views aus dem Paket django.contrib.auth
     path("abmeldung/",                       authviews.LogoutView.as_view(),                 name="logout"),

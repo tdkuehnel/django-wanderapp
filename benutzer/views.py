@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import FormView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 from django.views.generic import CreateView
 from django.views.generic import ListView
 from django.urls import reverse_lazy
@@ -148,3 +149,18 @@ class BenutzerWanderStreckeUpdateView(UpdateView):
         if form.changed_data:
             messages.success(self.request, f'Änderungen an der Wanderstrecke "{self.object.__str__()}" wurden gespeichert.')
         return super().form_valid(form)
+
+class BenutzerWanderStreckeDeleteView(DeleteView):
+    """Ansicht zum Löschen einer Wanderstrecke eines Benutzers."""
+    model = WanderStrecke
+    #fields = ['bezeichnung', 'json', 'url', 'bild',]
+    #form_class = WanderStreckeUpdateForm
+    template_name = 'benutzer/wanderstrecke_loeschen_form.html'
+
+    def get_success_url(self):
+        return reverse("benutzer:wanderhome")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Wanderstrecke löschen.'
+        return context
