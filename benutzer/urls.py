@@ -11,6 +11,7 @@ urlpatterns = [
     path('anmeldung/',                                       views.WanderappLoginView.as_view(),                 name='login'),
     path("profil/",                                          views.redirect_to_user_profile,                     name="home"),
     path("profil/<int:pk>",                                  views.BenutzerProfilView.as_view(),                 name="profil"),
+    path("wanderstrecken/",                                  views.redirect_to_user_wanderstrecken,              name="wanderhome"),
     path('wanderstrecken/<int:benutzer_id>/',                views.BenutzerWanderStreckeListView.as_view(),      name='wanderstrecken'),
     path('wanderstrecke/hinzu/',                             views.BenutzerWanderStreckeCreateView.as_view(),    name='wanderstrecke_hinzu'),
     path('wanderstrecke/<int:pk>/',                          views.BenutzerWanderStreckeDetailView.as_view(),    name='wanderstrecke'),

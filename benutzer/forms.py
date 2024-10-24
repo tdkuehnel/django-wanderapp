@@ -11,6 +11,12 @@ from wanderstrecke.models import WanderStrecke
 
 # Anmeldeform
 
+class AnmeldungsForm(forms.Form):
+    captcha = CaptchaField()
+
+    def signup(self, request, user):
+        user.save()
+
 class AnmeldeForm(AuthenticationForm):
 
     def clean_username(self):

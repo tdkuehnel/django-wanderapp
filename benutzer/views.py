@@ -72,6 +72,12 @@ def redirect_to_user_profile(request):
         reverse('benutzer:profil',
                 args=[request.user.id]))
 
+@login_required
+def redirect_to_user_wanderstrecken(request):
+    return HttpResponseRedirect(
+        reverse('benutzer:wanderstrecken',
+                args=[request.user.id]))
+
 # Mixin from https://stackoverflow.com/questions/16937076/how-does-one-use-a-custom-widget-with-a-generic-updateview-without-having-to-red
 # Zur Zeit nicht benutzt.
 

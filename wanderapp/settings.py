@@ -74,7 +74,7 @@ except:
     
 ROOT_URLCONF = 'wanderapp.urls'
 LOGIN_URL = '/benutzer/anmelden/'
-LOGIN_REDIRECT_URL = '/benutzer/profil/'
+LOGIN_REDIRECT_URL = '/benutzer/wanderstrecken/'
 
 TEMPLATES = [
     {
@@ -109,6 +109,7 @@ DATABASES = {
 # Benutzermodell
 #
 AUTH_USER_MODEL = 'benutzer.Benutzer'
+ACCOUNT_SIGNUP_FORM_CLASS = 'benutzer.forms.AnmeldungsForm'
 
 AUTHENTICATION_BACKENDS = [
     # Needed to login by username in Django admin, regardless of `allauth`
