@@ -116,8 +116,9 @@ class BenutzerWanderStreckeCreateView(CreateView):
         return context
 
     def form_valid(self, form):
+        form.instance.benutzer = self.request.user
         messages.success(self.request, f'Wanderstrecke "{self.object.__str__()}" erzeugt.')
-        return super().form_valid(form)
+        return super(BenutzerWanderStreckeCreateView, self).form_valid(form)
 
 class BenutzerWanderStreckeDetailView(DetailView):
     """Ansicht zum Anzeigen einer Wanderstrecke eines Benutzers."""

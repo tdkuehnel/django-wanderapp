@@ -15,11 +15,15 @@
 {% block inhalt %}
 
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{ object.bild.url }}" alt="Wanderbild">
+        <img class="card-img-top" src="{{ object.bild.url }}" alt="Wanderbild"/>
         <div class="card-body">
             <h5 class="card-title">{{ object.bezeichnung }}</h5>
             <p class="card-text">{{ object.beschreibung }}</p>
-            <p class="card-text"><a href="{{ object.url }}" target="_blank">Auf strecken-messen.de anzeigen</a></p>
+            {% if object.valid_url %}
+                <p class="card-text"><a href="{{ object.url }}" target="_blank">Auf strecken-messen.de anzeigen</a></p>
+            {% else %}
+                <p class="card-text">Keine gültige Strecken-Messen URL eingetragen.</p>
+            {% endif %}
             <a href="{% url 'benutzer:wanderstrecke_bearbeiten' object.id %}" class="btn btn-primary">Bearbeiten</a>
         </div>
     </div>

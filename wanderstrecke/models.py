@@ -1,4 +1,5 @@
 from django.db import models
+from django_resized import ResizedImageField
 
 # Create your models here.
 
@@ -8,11 +9,14 @@ class WanderStrecke(models.Model):
     beschreibung            = models.CharField('Beschreibung', max_length=8192, default='<ohne Beschreibung>', db_column='wst_bsc')
     json                    = models.FileField('JSON-Datei')
     url                     = models.CharField('Link zum Teilen auf strecken-messen.de', max_length=65536, default='<leer>', db_column='wst_url')
-    bild                    = models.FileField('Bilddatei', default='wanderstrecke.jpg', upload_to='bilder_wanderstrecke')
+    bild                    = ResizedImageField('Bilddatei', size=[300,300], crop=['middle', 'center'], default='wanderstrecke.jpg', upload_to='bilder_wanderstrecke')
     benutzer                = models.ForeignKey('benutzer.Benutzer', on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return self.bezeichnung
+
+    def valid_url(self):
+        return self.url.startswith('https://www.strecken-messen.de')
 
     class Meta:
         app_label            = 'wanderstrecke'

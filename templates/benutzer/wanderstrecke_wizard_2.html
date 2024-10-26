@@ -1,0 +1,45 @@
+{% extends 'bootstrap/base.html' %}
+
+{% load crispy_forms_tags navtag %}
+
+{% block navigation %}
+{% nav "heimat" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% nav "wanderstrecken" for sidenav %}
+{{ block.super }}
+{% endblock %}
+
+{% block inhalt %}
+    <form method="post" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <h3>Hochladen einer JSON-Datei mit dem Streckenverlauf der Wanderung.</h3>
+        <p>Solch eine JSON-Datei können sie interaktiv auf der Webseite <a href="https://www.strecken-messen.de/" target="_blank">Strecken-Messen.de</a> zusammenstellen und dann herunterladen um sie hier in diesem Feld zum Hochladen zu verwenden.</p>
+        <p>Mit Hilfe dieser JSON-Datei können sie ihre Wanderstrecke jederzeit erneut auf Strecken-Messen.de verändern und anpassen, indem diese dort einfach wieder importiert wird.</p>
+        <p><a href="{% url 'benutzer:hilfe_json' %}">Weitere Hilfe</a> zum Erzeugen und herunterladen der JSON-Datei.</p>
+
+        {{ form.non_field_errors }}
+        <div id="div_id_json" class="form-group">
+            {{ form.json.errors }}
+            {{ form.json|as_crispy_field }}
+        </div>
+
+        <h3>Bereitstellen eines Schnellverweises zum Streckenverlauf der Wanderung.</h3>
+
+        <p>Mit Hilfe des Schnellverweises können andere Benutzer ihre Wanderung einfach auf Strecken-Messen.de anzeigen. Der Schnellverweis wird zu ihrer Wanderung bei Strecken-Messen.de bereitgestellt und kann dort einfach herauskopiert werden.</p>
+
+        <p><a href="{% url 'benutzer:hilfe_url' %}">Weitere Hilfe</a> zum Herauskopieren des Schnellverweises.</p>
+
+        <div id="div_id_url" class="form-group">
+            {{ form.url.errors }}
+            {{ form.url|as_crispy_field }}
+        </div>
+        <button type="submit" class="btn btn-success">Weiter</button>
+        <a href="{% url 'benutzer:wizard1' object.id %}" class="btn btn-primary">Zurück</a>
+
+    </form>
+
+{% endblock %}

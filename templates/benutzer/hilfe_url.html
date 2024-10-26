@@ -1,0 +1,18 @@
+{% extends 'bootstrap/base.html' %}
+
+{% load static navtag %}
+
+{% block navigation %}
+{% nav "heimat" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% nav "wanderstrecken" for sidenav %}
+{{ block.super }}
+{% endblock %}
+
+{% block inhalt %}
+    <h3>Hilfe zum Herauskopieren des Schnellverweises von der Seite Strecken-Messen.de.</h3>
+    <img src="{% static 'media/hilfe_url.png' %}" alt="Hilfe zum Schnellverweis."/>
+{% endblock %}

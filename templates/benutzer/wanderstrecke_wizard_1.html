@@ -1,0 +1,30 @@
+{% extends 'bootstrap/base.html' %}
+
+{% load crispy_forms_tags navtag %}
+
+{% block navigation %}
+{% nav "heimat" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% nav "wanderstrecken" for sidenav %}
+{{ block.super }}
+{% endblock %}
+
+{% block inhalt %}
+
+    <h3>Angabe von Titel und Beschreibung.</h3>
+
+    <p>Bitte vergeben sie einen kurzen, aber aussagekräftigen Titel für ihre Wanderung. Nützlich ist möglicherweise auch eine Angabe der ungefähren Streckenlänge im Titel, um die Wanderungen leicht unterscheiden zu können.</p>
+
+    <p>In der Beschreibung können sie ihre Wanderung näher erläutern, zum Beispiel den Schwierigkeitsgrad hervorheben oder andere, zusätzliche Angaben machen welche helfen sollen, einen Eindruck von der Wanderung zu vermitteln.</p>
+
+    <form method="post" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+	{{ form|crispy }}
+        <button type="submit" class="btn btn-success">Weiter</button>
+        <a href="{% url 'benutzer:wanderhome' %}" class="btn btn-primary">Zurück</a>
+    </form>
+
+{% endblock %}
