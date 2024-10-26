@@ -1,5 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.views.generic import FormView
@@ -27,12 +29,15 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.forms.models import modelform_factory
+from formtools.wizard.views import SessionWizardView
 
 from benutzer.models import Benutzer
 from benutzer.forms import WanderStreckeUpdateForm
 from wanderstrecke.models import WanderStrecke
 
-from .forms import AnmeldeForm
+from .forms import AnmeldeForm, CreateWanderStreckeForm1, CreateWanderStreckeForm2, CreateWanderStreckeForm3
+
+import os
 
 class WanderappLoginView(LoginView):
     form_class = AnmeldeForm
@@ -164,3 +169,17 @@ class BenutzerWanderStreckeDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Wanderstrecke löschen.'
         return context
+
+class BenutzerWanderStreckeCreateWizardView(SessionWizardView):
+    form_list = [CreateWanderStreckeForm1, CreateWanderStreckeForm2, CreateWanderStreckeForm3]
+    template_name = 'benutzer/wanderstrecke_create_wizard_form.html'
+    file_storage = FileSystemStorage(location=os.path.join(settings.MEDIA_ROOT, 'filestorage'))
+
+    def done(self, form_list, **kwargs):
+        return HttpResponseRedirect(
+            reverse('benutzer:wanderstrecken',
+                    args=[self.request.user.id]))
+        
+#        return render(self.request, 'done.html', {
+#            'form_data': [form.cleaned_data for form in form_list],
+#        })

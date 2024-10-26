@@ -38,3 +38,14 @@ class WanderStreckeUpdateForm(ModelForm):
             "beschreibung": Textarea(attrs={"cols": 80, "rows": 4}),
             "url": Textarea(attrs={"cols": 40, "rows": 8}),
         }
+
+class CreateWanderStreckeForm1(forms.Form):
+    bezeichnung             = forms.CharField( max_length=512)
+    beschreibung            = forms.CharField( max_length=8192)
+
+class CreateWanderStreckeForm2(forms.Form):
+    json                    = forms.FileField(required=False)
+
+class CreateWanderStreckeForm3(forms.Form):
+    url                     = forms.CharField( max_length=65536)
+    bild                    = forms.FileField(required=False)

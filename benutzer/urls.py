@@ -14,6 +14,7 @@ urlpatterns = [
     path("wanderstrecken/",                                  views.redirect_to_user_wanderstrecken,              name="wanderhome"),
     path('wanderstrecken/<int:benutzer_id>/',                views.BenutzerWanderStreckeListView.as_view(),      name='wanderstrecken'),
     path('wanderstrecke/hinzu/',                             views.BenutzerWanderStreckeCreateView.as_view(),    name='wanderstrecke_hinzu'),
+    path('wanderstreckewizard/hinzu/',                       views.BenutzerWanderStreckeCreateWizardView.as_view(),    name='wanderstrecke_wizard_hinzu'),
     path('wanderstrecke/<int:pk>/',                          views.BenutzerWanderStreckeDetailView.as_view(),    name='wanderstrecke'),
     path('wanderstrecke/bearbeiten/<int:pk>/',               views.BenutzerWanderStreckeUpdateView.as_view(),    name='wanderstrecke_bearbeiten'),
     path('wanderstrecke/loeschen/<int:pk>/',                 views.BenutzerWanderStreckeDeleteView.as_view(),    name='wanderstrecke_loeschen'),

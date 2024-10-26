@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'django_navtag',
     'simple_history',
+    'formtools',
     'captcha',    
     'crispy_forms',
     'crispy_bootstrap4',
