@@ -13,6 +13,7 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from benutzer.models import Benutzer
 from benutzer.wizardforms import WanderStreckeUpdateForm1
@@ -21,7 +22,7 @@ from benutzer.wizardforms import WanderStreckeUpdateForm3
 
 from wanderstrecke.models import WanderStrecke
 
-class WizardCreateView(CreateView):
+class WizardCreateView(LoginRequiredMixin, CreateView):
     """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers Schritt 1."""
     model = WanderStrecke
     #fields = ['bezeichnung', 'json', 'url', 'bild',]
@@ -41,7 +42,7 @@ class WizardCreateView(CreateView):
         #messages.success(self.request, f'Wanderstrecke "{self.object.__str__()}" erzeugt.')
         return super(WizardCreateView, self).form_valid(form)
 
-class WizardUpdateView1(UpdateView):
+class WizardUpdateView1(LoginRequiredMixin, UpdateView):
     """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers Schritt 1 (Edit-Modus)."""
     model = WanderStrecke
     #fields = ['bezeichnung', 'json', 'url', 'bild',]
@@ -61,7 +62,7 @@ class WizardUpdateView1(UpdateView):
         return super().form_valid(form)
 
 
-class WizardUpdateView2(UpdateView):
+class WizardUpdateView2(LoginRequiredMixin, UpdateView):
     """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers Schritt 2."""
     model = WanderStrecke
     #fields = ['bezeichnung', 'json', 'url', 'bild',]
@@ -81,7 +82,7 @@ class WizardUpdateView2(UpdateView):
         return super().form_valid(form)
 
 
-class WizardUpdateView3(UpdateView):
+class WizardUpdateView3(LoginRequiredMixin, UpdateView):
     """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers Schritt 3."""
     model = WanderStrecke
     #fields = ['bezeichnung', 'json', 'url', 'bild',]
