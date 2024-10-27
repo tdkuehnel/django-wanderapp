@@ -11,3 +11,4 @@ imports
 db.sqlite3*
 pretty.py
 *.css
+seite.html

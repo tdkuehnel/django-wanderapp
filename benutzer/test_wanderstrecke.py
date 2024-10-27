@@ -7,21 +7,13 @@ from django.urls import reverse
 
 from .models import Benutzer
 
-from .testhilfen import create_benutzer
+from .testhilfen import create_benutzer, output
 
 import datetime
 
 # Create your tests here.
 
-class BenutzerFunctionalTest(TestCase):
-
-    def disabled_test_passwort_reset(self):
-        """ Test Passwort reset Funktionalität"""
-        benutzer = create_benutzer('name123', 'kennwort')
-        credentials = {'username': 'name123', 'password': 'falscheskennwort' }
-        response = self.client.post('/anmeldung/', credentials, follow=True)
-        self.assertFalse(response.context['user'].is_authenticated)
-
+class BenutzerWanderstreckeFunctionalTest(TestCase):
 
     def test_benutzer(self):
         """ Test von Benutzer"""
@@ -49,5 +41,21 @@ class BenutzerFunctionalTest(TestCase):
         self.assertIsNotNone(benutzer2)
 
         # Zugriff auf Profilseite darf nicht möglich sein ohne Anmeldung
-        #response = self.client.get('/benutzer/profil/'+str(benutzer.id)+'/', follow=True)
-        #self.assertIn(b'404', response.content)
+        response = self.client.get('/benutzer/profil/'+str(benutzer.id)+'/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Ihre Anmeldedaten', response.content)
+
+        response = self.client.get('/benutzer/profil/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Ihre Anmeldedaten', response.content)
+
+        # Ein angemeldeter Benutzer sieht seine Profilseite.
+        credentials = {'username': 'name123', 'password': 'kennwort' }
+        response = self.client.post('/benutzer/anmeldung/', credentials, follow=True)
+        self.assertTrue(response.context['user'].is_authenticated)
+        response = self.client.get('/benutzer/profil/', follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Bitte bearbeiten Sie ihr Profil', response.content)
+        #import pdb; pdb.set_trace()
+        #output(response.content)
+

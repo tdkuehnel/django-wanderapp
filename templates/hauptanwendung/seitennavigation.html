@@ -6,11 +6,13 @@
     <li class="nav-item">
         <a class="nav-link eintrag {{ sidenav.profil }}" href="{% url 'benutzer:home' %}">Profil</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link eintrag {{ sidenav.wanderstrecken }}" href="{% url 'benutzer:wanderstrecken' user.id %}">Wanderstrecken</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link eintrag {{ sidenav.authentifizierung }}" href="{% url 'benutzer:wanderstrecken' user.id %}">Zugangsdaten</a>
-    </li>
+    {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a class="nav-link eintrag {{ sidenav.wanderstrecken }}" href="{% url 'benutzer:wanderstrecken' user.id %}">Wanderstrecken</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link eintrag {{ sidenav.authentifizierung }}" href="{% url 'benutzer:wanderstrecken' user.id %}">Zugangsdaten</a>
+        </li>
+    {% endif %}
 </ul>
 

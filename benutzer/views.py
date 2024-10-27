@@ -42,7 +42,7 @@ class WanderappLoginView(LoginView):
         return self.render_to_response(self.get_context_data(form=form), status=401)
 
 
-class BenutzerProfilView(UpdateView):
+class BenutzerProfilView(LoginRequiredMixin, UpdateView):
     model = Benutzer
     fields = ['username', 'email', 'avatar',]
     template_name_suffix = "_update_form"

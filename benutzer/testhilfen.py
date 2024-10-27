@@ -12,6 +12,10 @@ def get_benutzer():
 def delete_benutzer(benutzer):
     benutzer.delete()
 
+def output(html_document):
+    with open('seite.html', 'wb') as ausgabedatei:
+        ausgabedatei.write(html_document)
+
 def pretty(html_document):
     soup = bs(html_document, 'html.parser')
     print(soup.prettify())
