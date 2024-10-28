@@ -1,0 +1,30 @@
+Um die Anwendung in Gang zu setzen, sind folgende Schritte notwendig:
+
+Durch setzen einer symbolischen Verknüpfung im wanderapp/wanderapp-Verzeichnis muß eine database.py aktiviert werden.
+
+cd wanderapp
+ln -s database_postgres.py database.py # Für eine Datenbank auf einem Postgres-Server.
+
+oder
+
+ln -s database_mysql.py database.py  # Für eine Datenbank auf einer lokalen mysql-Datei.
+
+Je nach verwendetem Datenbanksystem muß entweder spatiallight oder postgis installiert werden.
+
+Kennwortdatei für den Datenbankzugriff.
+
+Ein Verzeichnis /etc/wanderapp muß erstellt werden mit Zugriffsrechten für den Benutzer welcher die Anwendung ausführt.
+In diesem Verzeichnis muß eine Datei mit dem Zugriffskennwort für den Datenbankbenutzer postgis angelegt werden.
+
+echo -n "kennwort" > /etc/wanderapp/wanderapp_dbpw.txt
+
+Die Kennwortdatei sollte keinen Zeilenvorschub enthalten, lediglich das Kennwort als Bytefolge (ASCII).
+
+Aus dem postgresserver muß ein Benutzer sowie eine Datenbank angelegt
+werden. Die Datenbank sollte dem Benutzer gehören, welcher in der
+database_postgres.py Datei angegeben wird. Er braucht die createdb
+Rolle um django-migrationen ausführen zu können.
+
+Die postgis-Erweiterung muß für diese Datenbank aktiviet werden mittels
+
+create extension postgis

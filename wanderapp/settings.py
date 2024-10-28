@@ -99,13 +99,7 @@ WSGI_APPLICATION = 'wanderapp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+from .database import DATABASES as DATABASES, INSTANCE_NAME
 
 # Benutzermodell
 #
