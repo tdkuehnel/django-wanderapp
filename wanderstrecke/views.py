@@ -8,3 +8,8 @@ from .models import WanderStrecke
 class WanderStreckeListView(ListView):
     """Ansicht zur Anzeige aller Wanderstrecken."""
     model = WanderStrecke
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Sehenswerte Wanderstrecken.'
+        return context

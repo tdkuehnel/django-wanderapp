@@ -41,7 +41,6 @@ class WanderappLoginView(LoginView):
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form), status=401)
 
-
 class BenutzerProfilView(LoginRequiredMixin, UpdateView):
     model = Benutzer
     fields = ['username', 'email', 'avatar',]

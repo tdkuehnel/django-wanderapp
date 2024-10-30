@@ -6,5 +6,4 @@ def index(request):
     """
     Our main index view
     """
-    return render(request, 'hauptanwendung/index.html', {'title': 'Anwendung Wanderapp',
-    })
+    return render(request, 'hauptanwendung/index.html', {'title': 'Anwendung Wanderapp.',})

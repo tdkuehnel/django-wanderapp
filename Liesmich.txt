@@ -1,0 +1,30 @@
+Tests
+=====
+
+Für die Tests wird postgresql mit der postgis-Erweiterung
+benötigt. Der in der wanderapp/database.py aufgeführte Benutzer muß
+auf der Datenbank daß Recht habe, Erweiterungen aktivieren zu können.
+
+Am besten erstellt man ein template auf Datenbankserverebene in
+welchem die postgis-Erweiterung von einem postgres superuser
+installiert worden ist.
+
+sudo -u postgres psql
+create database template_gis owner postgres;
+\c template_gis
+create extension postgis;
+grant connect on template_gis to public;
+revoke temporary on database template_gis from public;
+
+Das ganze funktioniert nicht. Kommt ein Fehler:
+
+(python_django4_0_wanderapp) [tdkuehnel@post03 wanderapp]$ python manage.py test
+Found 3 test(s).
+Creating test database for alias 'default'...
+Got an error creating the test database: permission denied to copy database "template_gis"
+
+Dann wird dieses template mit der aktivierten postgis-Erweiterung als
+Grundlage für die Testläufe verwendet, in dem in der Datei
+wanderaoo/database.py ein TEMPLATE Parameter hinzugeüfgt wird.
+
+
