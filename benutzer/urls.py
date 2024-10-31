@@ -22,7 +22,11 @@ urlpatterns = [
     path('wanderstreckewizardc1/',                           wizardviews.WizardCreateView.as_view(),             name='wizardc1'),
     path('wanderstreckewizard1/<int:pk>/',                   wizardviews.WizardUpdateView1.as_view(),            name='wizard1'),
     path('wanderstreckewizard2/<int:pk>/',                   wizardviews.WizardUpdateView2.as_view(),            name='wizard2'),
-    path('wanderstreckewizard3/<int:pk>/',                   wizardviews.WizardUpdateView3.as_view(),            name='wizard3'),
+    #path('wanderstreckewizard3/<int:pk>/',                   wizardviews.WizardUpdateView3.as_view(),            name='wizard3'),
+    path('wanderstreckewizard3cneu/<int:pk>/',               wizardviews.WizardCreateView3Neu.as_view(),         name='wizard3cneu'),
+    path('wanderstreckewizard3neu/<int:pk>/',                wizardviews.WizardUpdateView3Neu.as_view(),         name='wizard3neu'),
+    path('wanderstreckewizard4neu/<int:pk>/',                wizardviews.WizardUpdateView4Neu.as_view(),         name='wizard4neu'),
+    path('wanderstreckewizard3vorhanden/<int:pk>/',          wizardviews.WizardUpdateView3Vorhanden.as_view(),   name='wizard3vorhanden'),
 
     path('hilfejson/',                                       wizardviews.HilfeJSONView.as_view(),                name='hilfe_json'),
     path('hilfeurl/',                                        wizardviews.HilfeURLView.as_view(),                 name='hilfe_url'),

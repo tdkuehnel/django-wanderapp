@@ -1,8 +1,23 @@
 from django import forms
+from django.contrib.gis import forms as gisforms
 from django.forms import ModelForm, Textarea
 
 from benutzer.models import Benutzer
-from wanderstrecke.models import WanderStrecke
+from wanderstrecke.models import WanderStrecke, WanderAbschnitt
+
+class WanderappOsmWidget(gisforms.OSMWidget):
+    class Media:
+        extend = False
+        css = {
+            'all': [
+                'wanderstrecke/os3.css',
+                'https://cdn.jsdelivr.net/npm/ol@v7.2.2/ol.css'
+            ]
+        }
+        js = [
+            'https://cdn.jsdelivr.net/npm/ol@v7.2.2/dist/ol.js',
+            'wanderstrecke/OLMapWidget.js'
+        ]
 
 # Die Formulare für den WizardView um eine Wanderstrecke zu erzeugen.
 # Das Formular WanderStreckeUpdateForm1 wird auch für das erste
@@ -24,6 +39,16 @@ class WanderStreckeUpdateForm2(ModelForm):
     class Meta:
         model = WanderStrecke
         fields = [
+            'bild',
+        ]
+        widgets = {
+        }
+
+class WanderStreckeUpdateForm3(ModelForm):
+    """Dieses Formular bearbeitet einen WanderAbschnitt."""
+    class Meta:
+        model = WanderAbschnitt
+        fields = [
             'json',
             'url',
         ]
@@ -31,11 +56,29 @@ class WanderStreckeUpdateForm2(ModelForm):
             "url": Textarea(attrs={"cols": 40, "rows": 8}),
         }
 
-class WanderStreckeUpdateForm3(ModelForm):
+class WanderAbschnittCreateForm1(ModelForm):
+    """Dieses Formular bearbeitet einen WanderAbschnitt."""
     class Meta:
-        model = WanderStrecke
+        model = WanderAbschnitt
         fields = [
-            'bild',
+            'startpunkt',
+            'ort1',
         ]
         widgets = {
+            'startpunkt': WanderappOsmWidget(attrs={"display_raw": False, 'default_lat': 51.75679, 'default_lon': 10.62035}),
         }
+    class Media:
+        css = { 'all': ['wanderstrecke/os3.css'] }
+
+class WanderAbschnittCreateForm2(ModelForm):
+    """Dieses Formular bearbeitet einen WanderAbschnitt."""
+    class Meta:
+        model = WanderAbschnitt
+        fields = [
+            'strecke',
+        ]
+        widgets = {
+            'strecke': WanderappOsmWidget(attrs={"display_raw": True, 'default_lat': 51.75679, 'default_lon': 10.62035}),
+        }
+    class Media:
+        css = { 'all': ['wanderstrecke/os3.css'] }

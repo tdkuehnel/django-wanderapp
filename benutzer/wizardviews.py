@@ -19,13 +19,14 @@ from benutzer.models import Benutzer
 from benutzer.wizardforms import WanderStreckeUpdateForm1
 from benutzer.wizardforms import WanderStreckeUpdateForm2
 from benutzer.wizardforms import WanderStreckeUpdateForm3
+from benutzer.wizardforms import WanderAbschnittCreateForm1
+from benutzer.wizardforms import WanderAbschnittCreateForm2
 
-from wanderstrecke.models import WanderStrecke
+from wanderstrecke.models import WanderStrecke, WanderAbschnitt
 
 class WizardCreateView(LoginRequiredMixin, CreateView):
-    """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers Schritt 1."""
+    """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers - Schritt 1."""
     model = WanderStrecke
-    #fields = ['bezeichnung', 'json', 'url', 'bild',]
     form_class = WanderStreckeUpdateForm1
     template_name = 'benutzer/wanderstrecke_wizard_1.html'
 
@@ -39,13 +40,12 @@ class WizardCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.benutzer = self.request.user
-        #messages.success(self.request, f'Wanderstrecke "{self.object.__str__()}" erzeugt.')
         return super(WizardCreateView, self).form_valid(form)
 
+
 class WizardUpdateView1(LoginRequiredMixin, UpdateView):
-    """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers Schritt 1 (Edit-Modus)."""
+    """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers - Schritt 1 (Edit-Modus)."""
     model = WanderStrecke
-    #fields = ['bezeichnung', 'json', 'url', 'bild',]
     form_class = WanderStreckeUpdateForm1
     template_name = 'benutzer/wanderstrecke_wizard_1.html'
 
@@ -58,19 +58,20 @@ class WizardUpdateView1(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        #messages.success(self.request, f'Wanderstrecke "{self.object.__str__()}" erzeugt.')
         return super().form_valid(form)
 
 
 class WizardUpdateView2(LoginRequiredMixin, UpdateView):
-    """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers Schritt 2."""
+    """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers - Schritt 2."""
     model = WanderStrecke
-    #fields = ['bezeichnung', 'json', 'url', 'bild',]
     form_class = WanderStreckeUpdateForm2
     template_name = 'benutzer/wanderstrecke_wizard_2.html'
 
     def get_success_url(self):
-        return reverse("benutzer:wizard3", kwargs={"pk": self.object.id})
+        if 'weiter_mit_neuem_abschnitt' in self.request.POST:
+            return reverse("benutzer:wizard3cneu", kwargs={"pk": self.object.id})
+        if 'weiter_mit_vorhandenem_abschnitt' in self.request.POST:
+            return reverse("benutzer:wizard3vorhanden", kwargs={"pk": self.object.id})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -78,16 +79,86 @@ class WizardUpdateView2(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        #messages.success(self.request, f'Wanderstrecke "{self.object.__str__()}" erzeugt.')
+        return super().form_valid(form)
+
+########################################################################################################################
+#
+# Arbeiten mit einem neuen Wanderabschnitt.
+#
+#########################################################################################################################
+
+class WizardCreateView3Neu(LoginRequiredMixin, CreateView):
+    """Ansicht zum Hinzufügen eines Wanderabschnittes zu einer Wanderstrecke eines Benutzers -  Schritt 3."""
+    model = WanderAbschnitt
+    form_class = WanderAbschnittCreateForm1
+    template_name = 'benutzer/wanderstrecke_wizard_3neu.html'
+
+    def get_success_url(self):
+        return reverse("benutzer:wizard4neu", kwargs={"pk": self.object.id})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Wanderstrecke hinzufügen - Schritt 3.'
+        context['subtitle'] = 'Wanderabschnitt erzeugen - Startpunkt festlegen.'
+        context['wanderstrecke_id'] = self.kwargs['pk']
+        return context
+
+    def form_valid(self, form):
+        form.instance.wanderstrecke = get_object_or_404(WanderStrecke, pk=self.kwargs['pk'])
         return super().form_valid(form)
 
 
-class WizardUpdateView3(LoginRequiredMixin, UpdateView):
-    """Ansicht zum Hinzufügen einer Wanderstrecke eines Benutzers Schritt 3."""
-    model = WanderStrecke
-    #fields = ['bezeichnung', 'json', 'url', 'bild',]
+class WizardUpdateView3Neu(LoginRequiredMixin, UpdateView):
+    """Ansicht zum Hinzufügen eines Wanderabschnittes zu einer Wanderstrecke eines Benutzers -  Schritt 3."""
+    model = WanderAbschnitt
+    form_class = WanderAbschnittCreateForm1
+    template_name = 'benutzer/wanderstrecke_wizard_3neu.html'
+
+    def get_success_url(self):
+        return reverse("benutzer:wizard4neu", kwargs={"pk": self.object.id})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Wanderstrecke hinzufügen - Schritt 3.'
+        context['subtitle'] = 'Wanderabschnitt bearbeiten - Startpunkt festlegen.'
+        context['wanderstrecke_id'] = self.kwargs['pk']
+        return context
+
+    def form_valid(self, form):
+        form.instance.wanderstrecke = self.kwargs['pk']
+        return super().form_valid(form)
+
+class WizardUpdateView4Neu(LoginRequiredMixin, UpdateView):
+    """Ansicht zum Bearbeiten eines Wanderabschnittes zu einer Wanderstrecke eines Benutzers -  Schritt 4."""
+    model = WanderAbschnitt
+    form_class = WanderAbschnittCreateForm2
+    template_name = 'benutzer/wanderstrecke_wizard_4neu.html'
+
+    def get_success_url(self):
+        return reverse("benutzer:wanderstrecke", kwargs={"pk": self.object.id})
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Wanderstrecke hinzufügen - Schritt 4.'
+        context['subtitle'] = 'Wanderabschnitt bearbeiten - Strecke festlegen.'
+        context['wanderabschnitt_id'] = self.kwargs['pk']
+        return context
+
+    def form_valid(self, form):
+        form.instance.wanderstrecke = self.kwargs['pk']
+        return super().form_valid(form)
+
+########################################################################################################################
+#
+# Arbeiten mit einem vorhandenen Wanderabschnitt.
+#
+#########################################################################################################################
+
+class WizardUpdateView3Vorhanden(LoginRequiredMixin, CreateView):
+    """Ansicht zum Hinzufügen eines Wanderabschnittes zu einer Wanderstrecke eines Benutzers -  Schritt 3."""
+    model = WanderAbschnitt
     form_class = WanderStreckeUpdateForm3
-    template_name = 'benutzer/wanderstrecke_wizard_3.html'
+    template_name = 'benutzer/wanderstrecke_wizard_3_vorhanden.html'
 
     def get_success_url(self):
         return reverse("benutzer:wanderstrecke", kwargs={"pk": self.object.id})
@@ -95,11 +166,14 @@ class WizardUpdateView3(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Wanderstrecke hinzufügen - Schritt 3.'
+        context['wanderstrecke_id'] = self.kwargs['pk']
         return context
 
     def form_valid(self, form):
-        #messages.success(self.request, f'Wanderstrecke "{self.object.__str__()}" erzeugt.')
+        form.instance.wanderstrecke = self.kwargs['pk']
         return super().form_valid(form)
+
+#messages.success(self.request, f'Wanderstrecke "{self.object.__str__()}" erzeugt.')
 
 class HilfeJSONView(TemplateView):
     """View zur Anzeige der Hilfe zum Thema JSON Datei erzeugen auf Strecken_messen.de."""

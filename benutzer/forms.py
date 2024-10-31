@@ -30,8 +30,6 @@ class WanderStreckeUpdateForm(ModelForm):
         fields = [
             'bezeichnung',
             'beschreibung',
-            'json',
-            'url',
             'bild',
         ]
         widgets = {

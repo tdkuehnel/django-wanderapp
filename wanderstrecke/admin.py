@@ -22,8 +22,6 @@ class WanderStreckeAdminForm(forms.ModelForm):
         fields = [
             'bezeichnung',
             'beschreibung',
-            'json',
-            'url',
             'bild',
             'benutzer',
         ]
@@ -92,6 +90,8 @@ class WanderAbschnittAdminForm(forms.ModelForm):
             'beschreibung',
             'ort1',
             'ort2',
+            'json',
+            'url',
             'strecke',
         ]
         widgets = {

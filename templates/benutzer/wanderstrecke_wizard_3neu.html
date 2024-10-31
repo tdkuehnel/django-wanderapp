@@ -1,0 +1,50 @@
+{% extends 'bootstrap/base.html' %}
+
+{% load crispy_forms_tags navtag %}
+
+{% block navigation %}
+{% nav "heimat" for hauptnav %}
+{{ block.super }}
+{% endblock %}
+
+{% block seitennavigation %}
+{% nav "wanderstrecken" for sidenav %}
+{{ block.super }}
+{% endblock %}
+
+{% block media %}{{ form.media }}{% endblock %}
+
+{% block inhalt %}
+
+    <div class="mx-auto pt-4 pb-2">
+        <h2>{{ subtitle }}</h2>
+    </div>
+
+    <h3>Wählen Sie den Startpunkt aus der Liste der vorhandenen
+    Wanderpunkte oder legen Sie ihn interaktiv auf der Karte fest.</h3>
+
+    <form method="post" class="form-group" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <h4>Auswahl aus den bereits vorhandenen Startpunkten.</h4>
+        <div id="div_id_ort1" class="form-group">
+            {{ form.ort1.errors }}
+            {{ form.ort1|as_crispy_field }}
+        </div>
+        <button type="submit" name="weiter_mit_neuem_abschnitt" class="btn btn-success">Startpunkt auswählen und weiter</button>
+        <h4 class="mt-2"> -- oder --</h4>
+
+        <h4>Startpunkt interaktiv festlegen.</h4>
+        <div id="div_id_json" class="form-group">
+            {{ form.startpunkt.errors }}
+            {{ form.startpunkt|as_crispy_field }}
+        </div>
+
+        <div id="div_id_button" class="form-group">
+            <button type="submit" name="weiter_mit_neuem_abschnitt" class="btn btn-success">Startpunkt auswählen und weiter</button>
+        </div>
+        <a href="{% url 'benutzer:wizard2' wanderstrecke_id %}" class="btn btn-primary">Zurück</a>
+    </form>
+
+{% endblock %}

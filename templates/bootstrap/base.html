@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="{% block stylesheet2 %}{% static "hauptanwendung/css/style.css"%}?{% cache_bust %}{% endblock %}"\>
         <link rel="icon" type="image/x-icon" href="{% static "/hauptanwendung/favicon.ico"%}"\>
         <script src={% static "/chartjs/3.6.1/chart.js"%}></script>
+        {% block media %}{% endblock %}
     </head>
     
     <body>
@@ -52,9 +53,9 @@
                                 {% endblock head_title %}
                             </h1>
                         </div>
-                        {% block extra_head %}
-                        {% endblock extra_head %}
                     {% endblock %}
+                    {% block extra_head %}
+                    {% endblock extra_head %}
 
                     {% block messages %}
                         {% if messages %}

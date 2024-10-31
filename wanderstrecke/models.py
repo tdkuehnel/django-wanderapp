@@ -8,16 +8,11 @@ class WanderStrecke(models.Model):
     id                      = models.AutoField('ID', primary_key=True, db_column='wst_id')
     bezeichnung             = models.CharField('Bezeichnung', max_length=512, default='<unbenannt>', db_column='wst_txt')
     beschreibung            = models.CharField('Beschreibung', max_length=8192, default='<ohne Beschreibung>', db_column='wst_bsc')
-    json                    = models.FileField('JSON-Datei')
-    url                     = models.CharField('Link zum Teilen auf strecken-messen.de', max_length=65536, default='<leer>', db_column='wst_url')
     bild                    = ResizedImageField('Bilddatei', size=[300,300], crop=['middle', 'center'], default='wanderstrecke.jpg', upload_to='bilder_wanderstrecke')
     benutzer                = models.ForeignKey('benutzer.Benutzer', on_delete=models.SET_NULL, null=True)
     
     def __str__(self):
         return self.bezeichnung
-
-    def valid_url(self):
-        return self.url.startswith('https://www.strecken-messen.de')
 
     class Meta:
         app_label            = 'wanderstrecke'
@@ -48,12 +43,19 @@ class WanderAbschnitt(models.Model):
     id                      = models.AutoField('ID', primary_key=True, db_column='wst_id')
     bezeichnung             = models.CharField('Bezeichnung', max_length=512, default='<unbenannt>', db_column='wpt_txt')
     beschreibung            = models.CharField('Beschreibung', max_length=8192, default='<ohne Beschreibung>', db_column='wpt_bsc')
-    ort1                    = models.ForeignKey(WanderPunkt, on_delete=models.SET_NULL, null=True, related_name='wanderabschnitt_set1')
-    ort2                    = models.ForeignKey(WanderPunkt, on_delete=models.SET_NULL, null=True, related_name='wanderabschnitt_set2')
+    json                    = models.FileField('JSON-Datei', null=True)
+    url                     = models.CharField('Link zum Teilen auf strecken-messen.de', max_length=65536, default='<leer>', db_column='wst_url')
+    ort1                    = models.ForeignKey(WanderPunkt, on_delete=models.SET_NULL, null=True, blank=True, related_name='wanderabschnitt_set1')
+    ort2                    = models.ForeignKey(WanderPunkt, on_delete=models.SET_NULL, null=True, blank=True, related_name='wanderabschnitt_set2')
+    startpunkt              = models.PointField('Startpunkt', null=True, blank=True)
     strecke                 = models.LineStringField('Streckenführung', null=True, blank=True)
+    wanderstrecke           = models.ForeignKey(WanderStrecke, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.bezeichnung
+
+    def valid_url(self):
+        return self.url.startswith('https://www.strecken-messen.de')
 
     class Meta:
         app_label            = 'wanderstrecke'
